@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="keywords" content="Billetera Online">
+    <meta name="description" content="Billetera digital de la empresa Billetera Online">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Billetera Digital | Enviar Dinero</title>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="menu.html">💳 Billetera Digital</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="menu.html">Menú</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="deposit.html">Depositar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="sendmoney.html">Enviar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="transactions.html">Movimientos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" id="btn-logout">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="container my-5">
+        <div id="alerta-contenedor"></div>
+        <div class="card shadow-lg mx-auto wallet-card wallet-menu-card">
+            <div class="card-body p-4">
+                <h2 class="text-center mb-3">Enviar Dinero</h2>
+                <p class="text-center mb-4 wallet-balance">
+                    Saldo actual: $<span id="saldo-actual"></span>
+                </p>
+
+                <div class="mb-4 text-center">
+                    <button type="button" class="wallet-btn-secondary px-4 py-2" data-bs-toggle="modal"
+                        data-bs-target="#modalAgregarContacto">
+                        Agregar nuevo contacto
+                    </button>
+                </div>
+
+                <form action="" class="mb-3" id="form-envio">
+                    <div class="mb-3">
+                        <label class="form-label">Selecciona un contacto:</label>
+                        <select class="form-select wallet-input mb-3" name="contacto" id="select-contacto" required>
+                            <option value="">-- Seleccionar --</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="monto-envio" class="form-label">Monto a enviar:</label>
+                        <input type="number" class="form-control wallet-input" name="monto-envio" id="monto-envio"
+                            placeholder="Ingrese el monto" min="1" required />
+                    </div>
+
+                    <button type="submit" class="wallet-btn w-100 text-center py-2">Enviar dinero</button>
+                </form>
+
+                <a href="menu.html" class="wallet-btn-secondary w-100 text-center py-2">Volver al Menú Principal</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal fade" id="modalAgregarContacto" tabindex="-1" aria-labelledby="modalAgregarContactoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content wallet-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAgregarContactoLabel">Agregar Nuevo Contacto</h5>
+                    <button type="button" class="btn-close wallet-close-btn" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-nuevo-contacto">
+                        <div class="mb-3">
+                            <label for="nombre-contacto" class="form-label">Nombre completo:</label>
+                            <input type="text" class="form-control wallet-input" id="nombre-contacto"
+                                placeholder="Ej: María González" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="alias-contacto" class="form-label">Alias:</label>
+                            <input type="text" class="form-control wallet-input" id="alias-contacto"
+                                placeholder="Ej: maria.gonzalez" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cbu-contacto" class="form-label">CBU:</label>
+                            <input type="text" class="form-control wallet-input" id="cbu-contacto"
+                                placeholder="Ej: 1234567890123456789012" maxlength="22" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="banco-contacto" class="form-label">Banco:</label>
+                            <input type="text" class="form-control wallet-input" id="banco-contacto"
+                                placeholder="Ej: Banco Nación" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="wallet-btn-secondary px-3" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" form="form-nuevo-contacto" class="wallet-btn px-3">Guardar contacto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CONFIRMACION ENVIO -->
+    <div class="modal fade" id="modalConfirmarEnvio" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content wallet-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar Envío</h5>
+                    <button type="button" class="btn-close wallet-close-btn" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Estás a punto de enviar dinero a:</p>
+                    <h4 id="conf-nombre" style="color: var(--wallet-cyan);"></h4>
+                    <p class="mt-3">Monto:</p>
+                    <h3 id="conf-monto" class="wallet-amount-negative"></h3>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="wallet-btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="wallet-btn" id="btn-confirmar-envio">Confirmar Transferencia</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <p class="mb-0">&copy; 2025 Billetera Digital. Todos los derechos reservados.</p>
+                <p class="mb-0">
+                    <a href="#">Términos y Condiciones</a>
+                    <span class="mx-2">|</span>
+                    <a href="#">Privacidad</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

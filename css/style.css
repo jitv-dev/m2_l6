@@ -1,0 +1,446 @@
+/* Estilos personalizados Billetera Digital */
+
+/* Paleta de colores */
+:root {
+    --wallet-pink: #ff6ec4;
+    --wallet-purple: #6e00ff;
+    --wallet-blue: #00d4ff;
+    --wallet-cyan: #00ffe7;
+    --wallet-green: #76ff03;
+    --wallet-dark: #1a1423;
+    --wallet-light: #f8f9fa;
+    --wallet-orange: #ff9f00;
+    --wallet-magenta: #ff00d4;
+    --wallet-yellow: #fff600;
+    --wallet-red: #ff0044;
+    --wallet-bg-dark: #000000;
+    --wallet-bg-light: #ffffff;
+}
+
+/* Layout general */
+html {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(135deg, var(--wallet-dark) 0%, var(--wallet-bg-dark) 50%, var(--wallet-dark) 100%);
+    color: var(--wallet-light);
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--wallet-light);
+}
+
+p {
+    line-height: 1.6;
+    font-size: 1.2rem;
+    color: var(--wallet-light);
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(135deg,
+            var(--wallet-dark) 0%,
+            var(--wallet-bg-dark) 50%,
+            var(--wallet-dark) 100%);
+    box-shadow: 0px 4px 6px rgba(255, 0, 110, 0.4);
+    z-index: 1030;
+    position: sticky;
+    top: 0;
+}
+
+.navbar-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--wallet-light) !important;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    animation: wallet-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes wallet-glow {
+    from {
+        text-shadow:
+            0 0 8px var(--wallet-purple),
+            2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    to {
+        text-shadow:
+            0 0 16px var(--wallet-magenta),
+            4px 4px 8px rgba(0, 0, 0, 0.7);
+    }
+}
+
+.nav-link {
+    color: var(--wallet-light) !important;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.nav-link:hover {
+    color: var(--wallet-pink) !important;
+    transform: translateY(1px);
+    text-shadow: 0 0 10px var(--wallet-magenta);
+}
+
+.nav-link.active {
+    color: var(--wallet-pink) !important;
+    text-shadow: 0 0 10px var(--wallet-magenta);
+}
+
+/* Navbar Toggler (Icono hamburguesa) */
+.navbar-toggler {
+    border-color: var(--wallet-pink);
+    box-shadow: 0 0 5px rgba(255, 110, 196, 0.5);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ff6ec4' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 10px var(--wallet-magenta);
+}
+
+/* Hero Section */
+.wallet-hero {
+    padding: 50px 0;
+    text-align: center;
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Cards de billetera */
+.wallet-card {
+    background-color: var(--wallet-dark);
+    border: 2px solid var(--wallet-pink);
+}
+
+.wallet-card .card-title {
+    color: var(--wallet-light);
+}
+
+.wallet-card .card-text {
+    color: var(--wallet-light);
+}
+
+/* Sobreescribir text-muted para fondos oscuros */
+.wallet-card .text-muted {
+    color: #a8a8b3 !important;
+}
+
+/* Card de login */
+.wallet-login-card {
+    max-width: 450px;
+    width: 100%;
+}
+
+/* Card del menú principal */
+.wallet-menu-card {
+    max-width: 600px;
+}
+
+/* Card de transacciones (más ancho) */
+.wallet-transactions-card {
+    max-width: 800px;
+}
+
+/* Botones de billetera */
+.wallet-btn {
+    background: transparent;
+    border: 2px solid var(--wallet-pink);
+    color: var(--wallet-pink);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 0.4rem 1.2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    box-shadow: none;
+    outline: none;
+    transition: background 0.2s ease, color 0.2s ease;
+    display: inline-block;
+}
+
+.wallet-btn:hover,
+.wallet-btn:focus,
+.wallet-btn:focus-visible {
+    background: var(--wallet-pink);
+    color: var(--wallet-bg-dark);
+    border-color: var(--wallet-pink);
+    outline: none;
+    box-shadow: none;
+}
+
+/* Botón secundario (para volver, cancelar, etc) */
+.wallet-btn-secondary {
+    background: transparent;
+    border: 2px solid var(--wallet-cyan);
+    color: var(--wallet-cyan);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 0.4rem 1.2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    box-shadow: none;
+    outline: none;
+    transition: background 0.2s ease, color 0.2s ease;
+    display: inline-block;
+}
+
+.wallet-btn-secondary:hover,
+.wallet-btn-secondary:focus,
+.wallet-btn-secondary:focus-visible {
+    background: var(--wallet-cyan);
+    color: var(--wallet-bg-dark);
+    border-color: var(--wallet-cyan);
+    outline: none;
+    box-shadow: none;
+}
+
+/* Botón de peligro (Borrar) */
+.wallet-btn-danger {
+    background: transparent;
+    border: 2px solid var(--wallet-red);
+    color: var(--wallet-red);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 0.4rem 1.2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    box-shadow: none;
+    outline: none;
+    transition: background 0.2s ease, color 0.2s ease;
+    display: inline-block;
+}
+
+.wallet-btn-danger:hover,
+.wallet-btn-danger:focus,
+.wallet-btn-danger:focus-visible {
+    background: var(--wallet-red);
+    color: var(--wallet-bg-dark);
+    border-color: var(--wallet-red);
+    outline: none;
+    box-shadow: none;
+}
+
+/* Botón pequeño */
+.wallet-btn-sm {
+    padding: 0.25rem 0.8rem;
+    font-size: 0.85rem;
+}
+
+/* Inputs de formulario */
+.wallet-input {
+    background-color: var(--wallet-dark);
+    border: 1px solid var(--wallet-purple);
+    color: var(--wallet-light);
+}
+
+.wallet-input:focus {
+    background-color: var(--wallet-dark);
+    border-color: var(--wallet-pink);
+    color: var(--wallet-light);
+    box-shadow: 0 0 0 0.25rem rgba(255, 110, 196, 0.25);
+}
+
+.wallet-input::placeholder {
+    color: rgba(248, 249, 250, 0.5);
+}
+
+.form-label {
+    color: var(--wallet-light);
+}
+
+/* Display de saldo */
+.wallet-balance {
+    font-size: 1.5rem;
+    color: var(--wallet-green);
+    font-weight: bold;
+}
+
+/* Select para contactos */
+.form-select.wallet-input {
+    background-color: var(--wallet-dark);
+    border: 1px solid var(--wallet-purple);
+    color: var(--wallet-light);
+}
+
+.form-select.wallet-input:focus {
+    background-color: var(--wallet-dark);
+    border-color: var(--wallet-pink);
+    color: var(--wallet-light);
+    box-shadow: 0 0 0 0.25rem rgba(255, 110, 196, 0.25);
+}
+
+.form-select.wallet-input option {
+    background-color: var(--wallet-dark);
+    color: var(--wallet-light);
+}
+
+/* Montos en transacciones */
+.wallet-amount-positive {
+    color: var(--wallet-green);
+}
+
+.wallet-amount-negative {
+    color: var(--wallet-red);
+}
+
+/* Estilos para modal */
+.wallet-modal {
+    background-color: var(--wallet-dark);
+    border: 2px solid var(--wallet-pink);
+}
+
+.wallet-modal .modal-header {
+    border-bottom: 1px solid var(--wallet-purple);
+}
+
+.wallet-modal .modal-footer {
+    border-top: 1px solid var(--wallet-purple);
+}
+
+.wallet-modal .modal-title {
+    color: var(--wallet-light);
+}
+
+.wallet-close-btn {
+    filter: invert(1);
+    opacity: 0.8;
+}
+
+.wallet-close-btn:hover {
+    opacity: 1;
+}
+
+/* Alertas de Bootstrap personalizadas */
+#alerta-contenedor {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1050;
+    max-width: 400px;
+}
+
+#alerta-contenedor .alert,
+#mensaje .alert {
+    background-color: var(--wallet-dark);
+    border: 2px solid;
+    color: var(--wallet-light);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#alerta-contenedor .alert-success,
+#mensaje .alert-success {
+    border-color: var(--wallet-green);
+}
+
+#alerta-contenedor .alert-danger,
+#mensaje .alert-danger {
+    border-color: var(--wallet-red);
+}
+
+#alerta-contenedor .alert-warning,
+#mensaje .alert-warning {
+    border-color: var(--wallet-orange);
+}
+
+#alerta-contenedor .alert-info,
+#mensaje .alert-info {
+    border-color: var(--wallet-cyan);
+}
+
+#alerta-contenedor .btn-close {
+    filter: invert(1);
+}
+
+#datos-prueba {
+    background-color: var(--wallet-dark);
+    border: 1px solid var(--wallet-cyan);
+    color: var(--wallet-light);
+}
+
+#btnOlvidar {
+    color: var(--wallet-purple);
+}
+
+/* Alertas responsivas */
+@media (max-width: 768px) {
+    #alerta-contenedor {
+        right: 10px;
+        left: 10px;
+        max-width: calc(100% - 20px);
+    }
+}
+
+/* Footer con estética del navbar */
+footer {
+    margin-top: auto;
+    background: linear-gradient(135deg,
+            var(--wallet-dark) 0%,
+            var(--wallet-bg-dark) 50%,
+            var(--wallet-dark) 100%);
+    border-top: 2px solid var(--wallet-pink);
+    box-shadow: 0px -4px 6px rgba(255, 0, 110, 0.4);
+}
+
+footer a {
+    color: var(--wallet-pink);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: var(--wallet-magenta);
+    text-shadow: 0 0 8px var(--wallet-magenta);
+}
+
+/* Container flex para layout */
+.container {
+    flex: 1;
+}
+
+/* Header responsivo para transacciones */
+.wallet-header-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.wallet-header-btn {
+    position: absolute;
+    right: 0;
+}
+
+@media (max-width: 768px) {
+    .wallet-header-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .wallet-header-btn {
+        position: static;
+        width: 100%; /* Botón ancho completo en móvil para facilitar el toque */
+    }
+}
