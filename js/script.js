@@ -120,7 +120,6 @@ $('a[href="transactions.html"]').click(function (e) {
     }
 });
 
-const listaTransacciones = document.getElementById('lista-transacciones');
 
 // Depositar
 $('#form-deposito').submit(function (e) {
@@ -139,140 +138,119 @@ $('#form-deposito').submit(function (e) {
 });
 
 // Enviar platita
-const formEnvio = document.getElementById('form-envio');
 let transaccionPendiente = null; 
 
-if (formEnvio) {
-    formEnvio.addEventListener('submit', function (e) {
-        e.preventDefault();
+$('#form-envio').submit(function (e) {
+    e.preventDefault();
 
-        const select = document.getElementById('select-contacto');
-        const selectedOption = select.options[select.selectedIndex];
-        const nombreContacto = selectedOption.getAttribute('data-nombre');
-        const monto = parseFloat(document.getElementById('monto-envio').value);
-        const saldoActual = obtenerSaldo();
+    const select = $('#select-contacto')
+    const nombreContacto = select.find('option:selected').data('nombre');
+    const monto = parseFloat($('#monto-envio').val());
+    const saldoActual = obtenerSaldo();
 
-        if (!select.value) {
-            mostrarAlerta('Por favor selecciona un contacto', 'warning');
-            return;
-        }
+    if (!select.val()) {
+        mostrarAlerta('Por favor selecciona un contacto', 'warning');
+        return;
+    }
 
-        if (monto > saldoActual) {
-            mostrarAlerta('Saldo insuficiente', 'danger');
-            return;
-        }
+    if (monto > saldoActual) {
+        mostrarAlerta('Saldo insuficiente', 'danger');
+        return;
+    }
 
-        if (monto <= 0 || isNaN(monto)) {
-            mostrarAlerta('El monto debe ser mayor a 0', 'warning');
-            return;
-        }
+    if (monto <= 0 || isNaN(monto)) {
+        mostrarAlerta('El monto debe ser mayor a 0', 'warning');
+        return;
+    }
 
-        // Guardamos los datos temporalmente y mostramos el modal
-        transaccionPendiente = {
-            nombre: nombreContacto,
-            monto: monto,
-            saldoActual: saldoActual
-        };
+    transaccionPendiente = {
+        nombre: nombreContacto,
+        monto: monto,
+        saldoActual: saldoActual
+    };
 
-        document.getElementById('conf-nombre').textContent = nombreContacto;
-        document.getElementById('conf-monto').textContent = `$${monto.toLocaleString('es-CL')}`;
+    $('#conf-nombre').text(nombreContacto);
+    $('#conf-monto').text(`$${monto.toLocaleString('es-CL')}`);
 
-        const modal = new bootstrap.Modal(document.getElementById('modalConfirmarEnvio'));
-        modal.show();
-    });
-}
+    const modal = new bootstrap.Modal($('#modalConfirmarEnvio')[0]);
+    modal.show();
+});
 
-// Lógica del botón de confirmación dentro del modal
-const btnConfirmarEnvio = document.getElementById('btn-confirmar-envio');
-if (btnConfirmarEnvio) {
-    btnConfirmarEnvio.addEventListener('click', function() {
-        if (!transaccionPendiente) return;
 
-        const { nombre, monto, saldoActual } = transaccionPendiente;
-        const nuevoSaldo = saldoActual - monto;
+// Boton confirmar envio saldo
+$('#btn-confirmar-envio').click(function() {
+    if (!transaccionPendiente) return;
 
-        guardarSaldo(nuevoSaldo);
-        mostrarSaldo();
+    const { nombre, monto, saldoActual } = transaccionPendiente;
+    const nuevoSaldo = saldoActual - monto;
 
-        // Guardar en historial
-        guardarTransaccion(`Envío a ${nombre}`, monto, false);
+    guardarSaldo(nuevoSaldo);
+    mostrarSaldo();
+    guardarTransaccion(`Envío a ${nombre}`, monto, false);
+    mostrarAlerta(`¡Envío exitoso! Nuevo saldo: $${nuevoSaldo.toLocaleString('es-CL')}`);
 
-        mostrarAlerta(`¡Envío exitoso! Nuevo saldo: $${nuevoSaldo.toLocaleString('es-CL')}`);
-        
-        // Cerrar modal y limpiar
-        const modalEl = document.getElementById('modalConfirmarEnvio');
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        modal.hide();
-        
-        if (formEnvio) formEnvio.reset();
-        transaccionPendiente = null;
-    });
-}
+    // Cerrar modal y limpiar
+    const modalEl = $('#modalConfirmarEnvio')[0];
+    const modal = bootstrap.Modal.getInstance(modalEl);
+    modal.hide();
 
-// contacto
-const formContacto = document.getElementById('form-nuevo-contacto');
-if (formContacto) {
-    formContacto.addEventListener('submit', function (e) {
-        e.preventDefault();
+    $('#form-envio')[0].reset();
+    transaccionPendiente = null;
+});
 
-        // valores del formulario
-        const nombre = document.getElementById('nombre-contacto').value;
-        const alias = document.getElementById('alias-contacto').value;
-        const banco = document.getElementById('banco-contacto').value;
 
-        const contacto = { nombre, alias, banco };
-        const contactos = JSON.parse(localStorage.getItem('contactos')) || [];
-        contactos.push(contacto);
+// Agregar contacto
+$('#form-nuevo-contacto').submit(function (e) {
+    e.preventDefault();
+    const nombre = $('#nombre-contacto').val();
+    const alias = $('#alias-contacto').val();
+    const cbu = $('#cbu-contacto').val();
+    const banco = $('#banco-contacto').val();
 
-        // Guardar la lista de contactos en el localStorage
-        localStorage.setItem('contactos', JSON.stringify(contactos));
+    const contacto = { nombre, alias, banco };
+    const contactos = JSON.parse(localStorage.getItem('contactos')) || [];
+    contactos.push(contacto);
+    localStorage.setItem('contactos', JSON.stringify(contactos));
 
-        // Crear una nueva opción en el select de contactos
-        const select = document.getElementById('select-contacto');
-        const option = document.createElement('option');
-        option.value = Date.now().toString();
-        option.setAttribute('data-nombre', nombre);
-        option.textContent = `${nombre} - Alias: ${alias} - ${banco}`;
-        select.appendChild(option);
+    const select = $('#select-contacto');
+    const option = $('<option>')
+        .val(Date.now().toString())
+        .attr('data-nombre', nombre)
+        .text(`${nombre} - Alias: ${alias} - ${banco}`);
 
-        formContacto.reset();
-        const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregarContacto'));
-        modal.hide();
+    select.append(option);
 
-        mostrarAlerta('¡Contacto agregado exitosamente!');
-    });
-}
+    $('#form-nuevo-contacto')[0].reset();
+
+    const modal = bootstrap.Modal.getInstance($('#modalAgregarContacto')[0]);
+    modal.hide();
+
+    mostrarAlerta('¡Contacto agregado exitosamente!');
+});
 
 // Cargar la lista de contactos en el select de contactos al cargar la página
-window.addEventListener('load', function () {
+$(window).on('load', function () {
     const contactos = JSON.parse(localStorage.getItem('contactos')) || [];
+    const select = $('#select-contacto');
 
-    const select = document.getElementById('select-contacto');
-    if (select) {
-        contactos.forEach((contacto, index) => {
-            const option = document.createElement('option');
-            option.value = `guardado-${index}`;
-            option.setAttribute('data-nombre', contacto.nombre);
-            option.textContent = `${contacto.nombre} - Alias: ${contacto.alias} - ${contacto.banco}`;
-            select.appendChild(option);
-        });
-    }
+    contactos.forEach((contacto, index) => {
+        const option = $('<option>')
+            .val(`guardado-${index}`)
+            .attr('data-nombre', contacto.nombre)
+            .text(`${contacto.nombre} - Alias: ${contacto.alias} - ${contacto.banco}`);
+
+        select.append(option);
+    });
 });
 
 // Cerrar sesion
-const btnCerrarSesion = document.getElementById('btn-logout');
-if (btnCerrarSesion) {
-    btnCerrarSesion.addEventListener('click', function() {
-        localStorage.removeItem('usuarioGuardado');
-    });
-}
+$('#btn-logout').click(function () {
+    localStorage.removeItem('usuarioGuardado');
+});
 
 // Borrar histoirial
-const btnBorrarHistorial = document.getElementById('btn-borrar-historial');
-if (btnBorrarHistorial) {
-    btnBorrarHistorial.addEventListener('click', function() {
-        localStorage.removeItem('historial');
-        cargarHistorial();
-        mostrarAlerta('Historial eliminado correctamente.');
-    });
-}
+$('#btn-borrar-historial').click(function () {
+    localStorage.removeItem('historial');
+    cargarHistorial();
+    mostrarAlerta('Historial eliminado correctamente.');
+});
