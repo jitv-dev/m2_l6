@@ -135,6 +135,11 @@ $('#form-deposito').submit(function (e) {
         mostrarAlerta(`¡Depósito exitoso! Nuevo saldo: $${nuevoSaldo.toLocaleString('es-CL')}`);
         $('#form-deposito')[0].reset();
     }
+
+    // No me gusta como queda, pero el ejercicio lo pide
+    setTimeout(() => {
+        window.location.href = 'menu.html';
+    }, 2000)
 });
 
 // Enviar platita
@@ -207,6 +212,12 @@ $('#form-nuevo-contacto').submit(function (e) {
     const cbu = $('#cbu-contacto').val();
     const banco = $('#banco-contacto').val();
 
+    // Validacion CBU 22 digitos
+    if (cbu.length !== 22 || !/^\d+$/.test(cbu)) {
+        mostrarAlerta('El CBU debe tener exactamente 22 dígitos', 'warning');
+        return;
+    }
+
     const contacto = { nombre, alias, banco };
     const contactos = JSON.parse(localStorage.getItem('contactos')) || [];
     contactos.push(contacto);
@@ -228,7 +239,42 @@ $('#form-nuevo-contacto').submit(function (e) {
     mostrarAlerta('¡Contacto agregado exitosamente!');
 });
 
-// Cargar la lista de contactos en el select de contactos al cargar la página
+// Buscador
+$('#buscar-contacto').on('input', function () {
+    const terminoBusqueda = $(this).val().toLowerCase();
+    const select = $('#select-contacto');
+
+    // Resetear
+    select.val('');
+    $('#btn-enviar-dinero').hide();
+
+    // Filtrar opciones
+    select.find('option').each(function () {
+        const texto = $(this).text().toLowerCase();
+        const valor = $(this).val();
+
+        if (valor === '' || texto.includes(terminoBusqueda)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+});
+
+// Mostrar u ocultar boton envio dinero
+$('#select-contacto').change(function () {
+    const valorSeleccionado = $(this).val();
+
+    if (valorSeleccionado !== '') {
+        $('#btn-enviar-dinero').fadeIn(300);
+        $(this).addClass('contacto-seleccionado');
+    } else {
+        $('#btn-enviar-dinero').fadeOut(300);
+        $(this).removeClass('contacto-seleccionado');
+    }
+});
+
+// Cargar contactos al iniciar
 $(window).on('load', function () {
     const contactos = JSON.parse(localStorage.getItem('contactos')) || [];
     const select = $('#select-contacto');
@@ -237,6 +283,7 @@ $(window).on('load', function () {
         const option = $('<option>')
             .val(`guardado-${index}`)
             .attr('data-nombre', contacto.nombre)
+            .attr('data-alias', contacto.alias)
             .text(`${contacto.nombre} - Alias: ${contacto.alias} - ${contacto.banco}`);
 
         select.append(option);

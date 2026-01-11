@@ -56,14 +56,21 @@
                 <p class="text-center mb-4 wallet-balance">
                     Saldo actual: $<span id="saldo-actual"></span>
                 </p>
-
+    
                 <div class="mb-4 text-center">
                     <button type="button" class="wallet-btn-secondary px-4 py-2" data-bs-toggle="modal"
                         data-bs-target="#modalAgregarContacto">
                         Agregar nuevo contacto
                     </button>
                 </div>
-
+    
+                <!-- Campo de busqueda -->
+                <div class="mb-3">
+                    <label for="buscar-contacto" class="form-label">Buscar contacto:</label>
+                    <input type="text" class="form-control wallet-input" id="buscar-contacto"
+                        placeholder="Buscar por nombre o alias...">
+                </div>
+    
                 <form action="" class="mb-3" id="form-envio">
                     <div class="mb-3">
                         <label class="form-label">Selecciona un contacto:</label>
@@ -71,16 +78,17 @@
                             <option value="">-- Seleccionar --</option>
                         </select>
                     </div>
-
+    
                     <div class="mb-3">
                         <label for="monto-envio" class="form-label">Monto a enviar:</label>
                         <input type="number" class="form-control wallet-input" name="monto-envio" id="monto-envio"
                             placeholder="Ingrese el monto" min="1" required />
                     </div>
-
-                    <button type="submit" class="wallet-btn w-100 text-center py-2">Enviar dinero</button>
+    
+                    <button type="submit" class="wallet-btn w-100 text-center py-2" id="btn-enviar-dinero"
+                        style="display: none;">Enviar dinero</button>
                 </form>
-
+    
                 <a href="menu.html" class="wallet-btn-secondary w-100 text-center py-2">Volver al Menú Principal</a>
             </div>
         </div>
