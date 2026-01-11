@@ -2,7 +2,7 @@
 
 Todos los cambios notables de este proyecto serán documentados en este archivo.
 
-## [L6] - 2025-01-12
+## [L6] - 2026-01-11
 
 ### ✨ Agregado
 - Migración completa de JavaScript vanilla a jQuery
@@ -42,7 +42,7 @@ Todos los cambios notables de este proyecto serán documentados en este archivo.
 - UX mejorada con feedback visual
 - Comentarios más descriptivos en el código
 
-## [L5] - 2025-01-05
+## [L5] - 2026-01-05
 
 ### ✨ Inicial
 - Sistema de login con localStorage

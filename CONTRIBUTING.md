@@ -217,4 +217,4 @@ Si encuentras problemas:
 
 ---
 
-¡Gracias por contribuir! 🎉
+¡Gracias por contribuir! 😊

@@ -219,4 +219,4 @@ Para preguntas o sugerencias sobre el proyecto, puedes abrir un issue en GitHub.
 
 ---
 
-**💡 Proyecto Educativo** - Desarrollado con fines de aprendizaje de jQuery y desarrollo web frontend.
+**💡 Proyecto Educativo** - Desarrollado con fines de aprendizaje de jQuery y desarrollo web fullstack.
