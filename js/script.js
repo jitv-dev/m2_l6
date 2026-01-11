@@ -21,7 +21,7 @@ function mostrarAlerta(mensaje, tipo = 'success') {
     }, 3000);
 }
 
-// MANEJO DE SALDO
+// Manejo de saldo
 function obtenerSaldo() {
     const saldo = localStorage.getItem('saldo');
     return saldo ? parseFloat(saldo) : 20000;
@@ -33,11 +33,7 @@ function guardarSaldo(nuevoSaldo) {
 
 function mostrarSaldo() {
     const saldoActual = obtenerSaldo();
-    const elementosSaldo = document.querySelectorAll('#saldo-actual');
-
-    elementosSaldo.forEach(elemento => {
-        elemento.textContent = saldoActual.toLocaleString('es-CL');
-    });
+    $('#saldo-actual').text(saldoActual.toLocaleString('es-CL'));
 }
 
 function guardarTransaccion(descripcion, monto, esIngreso) {
@@ -59,22 +55,19 @@ function guardarTransaccion(descripcion, monto, esIngreso) {
 }
 
 function cargarHistorial() {
-    const lista = document.getElementById('lista-transacciones');
-    if (!lista) return;
-
     const historial = JSON.parse(localStorage.getItem('historial')) || [];
-    lista.innerHTML = '';
 
     if (historial.length === 0) {
-        lista.innerHTML = '<p class="text-center text-muted">No hay movimientos registrados.</p>';
+        $('#lista-transacciones').html('<p class="text-center text-muted">No hay movimientos registrados.</p>');
         return;
     }
 
+    let htmlTransacciones = '';
     historial.forEach(t => {
         const signo = t.esIngreso ? '+' : '-';
         const color = t.esIngreso ? 'wallet-amount-positive' : 'wallet-amount-negative';
-        
-        lista.innerHTML += `
+
+        htmlTransacciones += `
             <div class="card wallet-card mb-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -87,38 +80,63 @@ function cargarHistorial() {
                 </div>
             </div>`;
     });
+
+    $('#lista-transacciones').html(htmlTransacciones);
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+$(document).ready(function () {
     mostrarSaldo();
     cargarHistorial();
+});
+
+// Alertas al cambiar en el menu
+$('a[href="deposit.html"]').click(function (e) {
+    if ($(this).parent().hasClass('d-grid')) {
+        e.preventDefault();
+        mostrarAlerta('Redirigiendo a depositar...', 'info');
+        setTimeout(() => {
+            window.location.href = 'deposit.html';
+        }, 1000);
+    }
+});
+
+$('a[href="sendmoney.html"]').click(function (e) {
+    if ($(this).parent().hasClass('d-grid')) {
+        e.preventDefault();
+        mostrarAlerta('Redirigiendo a enviar dinero...', 'info');
+        setTimeout(() => {
+            window.location.href = 'sendmoney.html';
+        }, 1000);
+    }
+});
+
+$('a[href="transactions.html"]').click(function (e) {
+    if ($(this).parent().hasClass('d-grid')) {
+        e.preventDefault();
+        mostrarAlerta('Redirigiendo a últimos movimientos...', 'info');
+        setTimeout(() => {
+            window.location.href = 'transactions.html';
+        }, 1000);
+    }
 });
 
 const listaTransacciones = document.getElementById('lista-transacciones');
 
 // Depositar
-const formDeposito = document.getElementById('form-deposito');
-if (formDeposito) {
-    formDeposito.addEventListener('submit', function (e) {
-        e.preventDefault();
+$('#form-deposito').submit(function (e) {
+    e.preventDefault();
+    const monto = parseFloat($('#monto-deposito').val());
+    if (monto > 0) {
+        const saldoActual = obtenerSaldo();
+        const nuevoSaldo = saldoActual + monto;
 
-        const monto = parseFloat(document.getElementById('monto-deposito').value);
-
-        if (monto > 0) {
-            const saldoActual = obtenerSaldo();
-            const nuevoSaldo = saldoActual + monto;
-
-            guardarSaldo(nuevoSaldo);
-            mostrarSaldo();
-
-            // Guardar en historial
-            guardarTransaccion('Depósito en cuenta', monto, true);
-
-            mostrarAlerta(`¡Depósito exitoso! Nuevo saldo: $${nuevoSaldo.toLocaleString('es-CL')}`);
-            formDeposito.reset();
-        }
-    });
-}
+        guardarSaldo(nuevoSaldo);
+        mostrarSaldo();
+        guardarTransaccion('Depósito en cuenta', monto, true);
+        mostrarAlerta(`¡Depósito exitoso! Nuevo saldo: $${nuevoSaldo.toLocaleString('es-CL')}`);
+        $('#form-deposito')[0].reset();
+    }
+});
 
 // Enviar platita
 const formEnvio = document.getElementById('form-envio');
