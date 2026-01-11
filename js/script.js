@@ -54,18 +54,44 @@ function guardarTransaccion(descripcion, monto, esIngreso) {
     localStorage.setItem('historial', JSON.stringify(historial));
 }
 
-function cargarHistorial() {
+function getTipoTransaccion(transaccion) {
+    if (transaccion.descripcion.includes('Depósito')) {
+        return 'Depósito';
+    } else if (transaccion.descripcion.includes('Envío')) {
+        return 'Transferencia enviada';
+    } else if (transaccion.esIngreso) {
+        return 'Transferencia recibida';
+    } else {
+        return 'Compra';
+    }
+}
+
+function cargarHistorial(filtro = 'todos') {
+    // Obtener todas las transacciones del localStorage
     const historial = JSON.parse(localStorage.getItem('historial')) || [];
 
-    if (historial.length === 0) {
+    // Variable para guardar las transacciones filtradas
+    let transaccionesFiltradas = historial;
+
+    // Aplicar el filtro según lo seleccionado
+    if (filtro === 'ingreso') {
+        transaccionesFiltradas = historial.filter(t => t.esIngreso === true);
+    } else if (filtro === 'egreso') {
+        transaccionesFiltradas = historial.filter(t => t.esIngreso === false);
+    }
+
+    // Si no hay transacciones, mostrar mensaje
+    if (transaccionesFiltradas.length === 0) {
         $('#lista-transacciones').html('<p class="text-center text-muted">No hay movimientos registrados.</p>');
         return;
     }
 
+    // Construir el HTML con las transacciones
     let htmlTransacciones = '';
-    historial.forEach(t => {
+    transaccionesFiltradas.forEach(t => {
         const signo = t.esIngreso ? '+' : '-';
         const color = t.esIngreso ? 'wallet-amount-positive' : 'wallet-amount-negative';
+        const tipo = getTipoTransaccion(t);
 
         htmlTransacciones += `
             <div class="card wallet-card mb-3">
@@ -73,7 +99,7 @@ function cargarHistorial() {
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="mb-1">${t.descripcion}</h6>
-                            <small class="text-muted">${t.fecha}</small>
+                            <small class="text-muted">${tipo} - ${t.fecha}</small>
                         </div>
                         <h5 class="mb-0 ${color}">${signo}$${t.monto.toLocaleString('es-CL')}</h5>
                     </div>
@@ -83,6 +109,11 @@ function cargarHistorial() {
 
     $('#lista-transacciones').html(htmlTransacciones);
 }
+
+$('#filtro-tipo').change(function () {
+    const filtroSeleccionado = $(this).val();
+    cargarHistorial(filtroSeleccionado);
+});
 
 $(document).ready(function () {
     mostrarSaldo();

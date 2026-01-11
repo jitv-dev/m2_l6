@@ -59,10 +59,20 @@
                 <p class="text-center mb-4 wallet-balance">
                     Saldo actual: $<span id="saldo-actual"></span>
                 </p>
-
+    
+                <!-- Filtro de tipo de movimiento -->
+                <div class="mb-4">
+                    <label for="filtro-tipo" class="form-label">Filtrar por tipo:</label>
+                    <select class="form-select wallet-input" id="filtro-tipo">
+                        <option value="todos">Todos los movimientos</option>
+                        <option value="ingreso">Ingresos</option>
+                        <option value="egreso">Egresos</option>
+                    </select>
+                </div>
+    
                 <!-- Lista de transacciones -->
                 <div class="mb-4" id="lista-transacciones"></div>
-
+    
                 <a href="menu.html" class="wallet-btn-secondary w-100 text-center py-2">Volver al Menú Principal</a>
             </div>
         </div>
