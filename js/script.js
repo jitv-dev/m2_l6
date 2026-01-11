@@ -1,10 +1,10 @@
-// SEGURIDAD: VERIFICAR SESIÓN
+// Redireccion a login si no se inicio sesion
 const paginaActual = window.location.pathname;
 if (!localStorage.getItem('usuarioGuardado') && !paginaActual.includes('index.html')) {
     window.location.href = 'login.html';
 }
 
-// ALERTA DE BOOTSTRAP
+// Alerta Bootstrap
 function mostrarAlerta(mensaje, tipo = 'success') {
     const alertaHTML = `
         <div class="alert alert-${tipo} alert-dismissible fade show" role="alert">
@@ -13,18 +13,12 @@ function mostrarAlerta(mensaje, tipo = 'success') {
         </div>
     `;
 
-    const contenedor = document.getElementById('alerta-contenedor');
-    if (contenedor) {
-        contenedor.innerHTML = alertaHTML;
+    $('#alerta-contenedor').html(alertaHTML);
 
-        // Autoeliminar después de 3 segundos
-        setTimeout(() => {
-            const alerta = contenedor.querySelector('.alert');
-            if (alerta) {
-                alerta.remove();
-            }
-        }, 3000);
-    }
+    // Autoeliminar despues de 3 segundos
+    setTimeout(() => {
+        $('#alerta-contenedor .alert').remove();
+    }, 3000);
 }
 
 // MANEJO DE SALDO
