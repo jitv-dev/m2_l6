@@ -1,6 +1,6 @@
 # 🤝 Guía de Contribución
 
-¡Gracias por tu interés en contribuir a Billetera Digital! Este documento te guiará a través del proceso.
+¡Gracias por tu interés en contribuir a Alke-Wallet! Este documento te guiará a través del proceso.
 
 ## 📋 Tabla de Contenidos
 
@@ -50,13 +50,13 @@ Para sugerir nuevas funcionalidades:
 
 2. **Clona tu fork**
    ```bash
-   git clone https://github.com/TU-USUARIO/billetera-digital.git
-   cd billetera-digital
+   git clone https://github.com/TU-USUARIO/Alke-Wallet.git
+   cd Alke-Wallet
    ```
 
 3. **Configura el repositorio original como upstream**
    ```bash
-   git remote add upstream https://github.com/USUARIO-ORIGINAL/billetera-digital.git
+   git remote add upstream https://github.com/USUARIO-ORIGINAL/Alke-Wallet.git
    ```
 
 4. **Abre el proyecto**
@@ -178,7 +178,7 @@ git push origin feature/nombre-descriptivo
 Al agregar nuevos archivos, sigue esta estructura:
 
 ```
-billetera-digital/
+Alke-Wallet/
 ├── index.html
 ├── login.html
 ├── menu.html
