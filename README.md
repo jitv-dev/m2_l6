@@ -25,7 +25,7 @@ La aplicación simula una billetera digital básica que permite a los usuarios g
 - **CSS3** - Estilos personalizados con variables CSS
 - **Bootstrap 5.3.8** - Framework CSS para diseño responsivo
 - **JavaScript ES6** - Lógica de la aplicación
-- **jQuery 3.6.0** - Manipulación del DOM y eventos
+- **jQuery 3.7.1** - Manipulación del DOM y eventos
 - **LocalStorage** - Persistencia de datos en el navegador
 
 ## 📁 Estructura del Proyecto
